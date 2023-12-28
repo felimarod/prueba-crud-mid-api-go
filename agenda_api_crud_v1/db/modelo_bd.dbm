@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.0.0-beta1" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="academica" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="agenda" layers="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="contacto" layers="0" collapse-mode="2" pagination="true" attribs-page="0" ext-attribs-page="0" max-obj-count="4" z-value="0">
+	<schema name="agenda"/>
+	<role name="postgres"/>
+	<position x="180" y="160"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nombre_completo">
+		<type name="varchar" length="60"/>
+	</column>
+	<column name="numero_documento">
+		<type name="varchar" length="60"/>
+	</column>
+	<column name="direccion">
+		<type name="varchar" length="60"/>
+	</column>
+	<constraint name="contacto_pk" type="pk-constr" table="agenda.contacto">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="numero_telefonico" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="agenda"/>
+	<role name="postgres"/>
+	<position x="780" y="80"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="contacto_id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="numero_contacto" not-null="true">
+		<type name="varchar" length="10"/>
+	</column>
+	<constraint name="numero_telefonico_pk" type="pk-constr" table="agenda.numero_telefonico">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="email" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="agenda"/>
+	<role name="postgres"/>
+	<position x="820" y="300"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="contacto_id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="varchar" length="60"/>
+	</column>
+	<constraint name="email_pk" type="pk-constr" table="agenda.email">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk_numero_telefono_contacto" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="agenda.contacto" table="agenda.numero_telefonico">
+	<columns names="contacto_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_email_contacto" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="agenda.contacto" table="agenda.email">
+	<columns names="contacto_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_numero_telefonico_contacto" type="relfk" layers="0"
+	 src-table="agenda.numero_telefonico"
+	 dst-table="agenda.contacto" reference-fk="fk_numero_telefono_contacto"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_email_contacto" type="relfk" layers="0"
+	 src-table="agenda.email"
+	 dst-table="agenda.contacto" reference-fk="fk_email_contacto"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+</dbmodel>
