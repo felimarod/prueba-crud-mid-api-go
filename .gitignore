@@ -1,0 +1,7 @@
+.vscode/
+.scannerwork/
+*swagger*
+*.env
+*.tmp
+agenda_api_crud_v1
+parametro_api_crud_v1

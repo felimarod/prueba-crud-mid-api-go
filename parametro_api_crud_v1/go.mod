@@ -1,6 +1,6 @@
 module github.com/felimarod/ejercicio_crud_mid_api/parametro_api_crud_v1
 
-go 1.21.5
+go 1.18
 
 require (
 	github.com/astaxie/beego v1.12.3

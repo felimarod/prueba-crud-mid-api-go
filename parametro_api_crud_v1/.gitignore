@@ -1,7 +1,0 @@
-.vscode/
-.scannerwork/
-routers/commentsRouter_controllers.go
-swagger/
-*.env
-parametro_api_crud_v1
-*.tmp

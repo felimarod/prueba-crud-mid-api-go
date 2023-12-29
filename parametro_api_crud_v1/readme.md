@@ -10,12 +10,12 @@ API Restful para el manejo de los datos de la agenda personal.
 ## Variables de entorno
 En un archivo `.env` agregar
 ```bash
-export PARAMETROS_API_V1_PGUSER=postgres
-export PARAMETROS_API_V1_PGPASS=avion123
-export PARAMETROS_API_V1_PGHOST=localhost
-export PARAMETROS_API_V1_PGPORT=5432
-export PARAMETROS_API_V1_PGDB=core
-export PARAMETROS_API_V1_PGSCHEMA=parametros
+export PARAMETROS_API_V1_PGUSER=
+export PARAMETROS_API_V1_PGPASS=
+export PARAMETROS_API_V1_PGHOST=
+export PARAMETROS_API_V1_PGPORT=
+export PARAMETROS_API_V1_PGDB=
+export PARAMETROS_API_V1_PGSCHEMA=
 ```
 Y antes de ejecutar el programa ejecutar `source .env` para cargar las variables de entorno
 
