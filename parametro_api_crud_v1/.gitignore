@@ -1,0 +1,9 @@
+lastupdate.tmp
+.vscode/
+parametro_api_crud_v1
+*.tmp
+.scannerwork/
+swagger/**
+!swagger/swagger.json
+!swagger/swagger.yml
+.env
