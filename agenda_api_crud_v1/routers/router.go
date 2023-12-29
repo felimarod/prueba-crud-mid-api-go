@@ -8,6 +8,8 @@
 package routers
 
 import (
+	"fmt"
+
 	"github.com/felimarod/ejercicio_crud_mid_api/agenda_api_crud_v1/controllers"
 
 	"github.com/astaxie/beego"
@@ -35,4 +37,5 @@ func init() {
 		),
 	)
 	beego.AddNamespace(ns)
+	fmt.Println("Router inicializado")
 }

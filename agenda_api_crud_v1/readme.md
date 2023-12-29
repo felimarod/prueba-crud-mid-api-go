@@ -19,4 +19,6 @@ export AGENDA_API_V1_PGSCHEMA=
 ```
 Y antes de ejecutar el programa ejecutar `source .env` para cargar las variables de entorno
 
-
+```bash
+bee run -downdoc=true -gendoc=true
+```

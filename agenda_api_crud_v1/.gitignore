@@ -1,7 +1,7 @@
 lastupdate.tmp
 .vscode/
 agenda_api_crud_v1
-main
+*.tmp
 .scannerwork/
 swagger/**
 !swagger/swagger.json
