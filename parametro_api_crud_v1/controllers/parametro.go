@@ -124,6 +124,7 @@ func (c *ParametroController) GetAll() {
 			}
 			k, v := kv[0], kv[1]
 			query[k] = v
+			beego.Debug(k, v)
 		}
 	}
 
