@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"agenda_parametros_mid/controllers"
+	"github.com/felimarod/ejercicio_crud_mid_api/agenda_parametros_mid/controllers"
 
 	"github.com/astaxie/beego"
 )

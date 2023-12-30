@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"agenda_parametros_mid/models"
 	"encoding/json"
+
+	"github.com/felimarod/ejercicio_crud_mid_api/agenda_parametros_mid/models"
 
 	"github.com/astaxie/beego"
 )
