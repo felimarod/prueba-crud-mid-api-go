@@ -6,20 +6,19 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/felimarod/ejercicio_crud_mid_api/agenda_api_crud_v1/models"
-	"github.com/udistrital/utils_oas/time_bogota"
+	"github.com/beego/beego/logs"
+	"github.com/felimarod/ejercicio_crud_mid_api/parametro_api_crud_v1/models"
 
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/logs"
 )
 
-// EmailController operations for Email
-type EmailController struct {
+// AreaTipoController operations for AreaTipo
+type AreaTipoController struct {
 	beego.Controller
 }
 
 // URLMapping ...
-func (c *EmailController) URLMapping() {
+func (c *AreaTipoController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -29,19 +28,15 @@ func (c *EmailController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description create Email
-// @Param	body		body 	models.Email	true		"body for Email content"
-// @Success 201 {int} models.Email
+// @Description create AreaTipo
+// @Param	body		body 	models.AreaTipo	true		"body for AreaTipo content"
+// @Success 201 {int} models.AreaTipo
 // @Failure 403 body is empty
 // @router / [post]
-func (c *EmailController) Post() {
-	var v models.Email
-	v.FechaCreacion = time_bogota.TiempoBogotaFormato()
-	v.FechaModificacion = time_bogota.TiempoBogotaFormato()
+func (c *AreaTipoController) Post() {
+	var v models.AreaTipo
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddEmail(&v); err == nil {
-			c.Ctx.Output.SetStatus(201)
-			//c.Data["json"] = v
+		if _, err := models.AddAreaTipo(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "201", "Message": "Registration successful", "Data": v}
 		} else {
@@ -59,15 +54,15 @@ func (c *EmailController) Post() {
 
 // GetOne ...
 // @Title Get One
-// @Description get Email by id
+// @Description get AreaTipo by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.Email
+// @Success 200 {object} models.AreaTipo
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *EmailController) GetOne() {
+func (c *AreaTipoController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetEmailById(id)
+	v, err := models.GetAreaTipoById(id)
 	if err != nil {
 		logs.Error(err)
 		c.Data["message"] = "Error service GETONE: The request contains an incorrect parameter or no record exists"
@@ -80,17 +75,17 @@ func (c *EmailController) GetOne() {
 
 // GetAll ...
 // @Title Get All
-// @Description get Email
+// @Description get AreaTipo
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.Email
+// @Success 200 {object} models.AreaTipo
 // @Failure 403
 // @router / [get]
-func (c *EmailController) GetAll() {
+func (c *AreaTipoController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -132,7 +127,7 @@ func (c *EmailController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllEmail(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllAreaTipo(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		logs.Error(err)
 		c.Data["message"] = "Error service GETALL: The request contains an incorrect parameter or no record exists"
@@ -145,20 +140,18 @@ func (c *EmailController) GetAll() {
 
 // Put ...
 // @Title Put
-// @Description update the Email
+// @Description update the AreaTipo
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.Email	true		"body for Email content"
-// @Success 200 {object} models.Email
+// @Param	body		body 	models.AreaTipo	true		"body for AreaTipo content"
+// @Success 200 {object} models.AreaTipo
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *EmailController) Put() {
+func (c *AreaTipoController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v := models.Email{Id: id}
+	v := models.AreaTipo{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		v.FechaCreacion = time_bogota.TiempoCorreccionFormato(v.FechaCreacion)
-		v.FechaModificacion = time_bogota.TiempoBogotaFormato()
-		if err := models.UpdateEmailById(&v); err == nil {
+		if err := models.UpdateAreaTipoById(&v); err == nil {
 			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Update successful", "Data": v}
 		} else {
 			logs.Error(err)
@@ -166,24 +159,24 @@ func (c *EmailController) Put() {
 			c.Abort("400")
 		}
 	} else {
-			logs.Error(err)
-			c.Data["message"] = "Error service PUT: The request contains an incorrect parameter or invalid parameter"
-			c.Abort("400")
+		logs.Error(err)
+		c.Data["message"] = "Error service PUT: The request contains an incorrect parameter or invalid parameter"
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
 
 // Delete ...
 // @Title Delete
-// @Description delete the Email
+// @Description delete the AreaTipo
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *EmailController) Delete() {
+func (c *AreaTipoController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteEmail(id); err == nil {
+	if err := models.DeleteAreaTipo(id); err == nil {
 		d := map[string]interface{}{"id": id}
 		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Delete successful", "Data": d}
 	} else {

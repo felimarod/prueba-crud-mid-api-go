@@ -8,34 +8,18 @@
 package routers
 
 import (
-	"fmt"
-
-	"github.com/felimarod/ejercicio_crud_mid_api/agenda_api_crud_v1/controllers"
+	"github.com/felimarod/ejercicio_crud_mid_api/agenda_parametros_mid/controllers"
 
 	"github.com/astaxie/beego"
 )
 
 func init() {
 	ns := beego.NewNamespace("/v1",
-
-		beego.NSNamespace("/contacto",
+		beego.NSNamespace("/contacto_parametro",
 			beego.NSInclude(
-				&controllers.ContactoController{},
-			),
-		),
-
-		beego.NSNamespace("/numero_telefonico",
-			beego.NSInclude(
-				&controllers.NumeroTelefonicoController{},
-			),
-		),
-
-		beego.NSNamespace("/email",
-			beego.NSInclude(
-				&controllers.EmailController{},
+				&controllers.ContactosParametrosController{},
 			),
 		),
 	)
 	beego.AddNamespace(ns)
-	fmt.Println("Router inicializado")
 }

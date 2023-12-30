@@ -197,7 +197,7 @@ func (c *ContactoController) Delete() {
 	} else {
 		//c.Data["json"] = err.Error()
 		logs.Error(err)
-		c.Data["message"] = "Error service PUT: The request contains an incorrect parameter or invalid parameter"
+		c.Data["message"] = "Error service Delete: The request contains an incorrect parameter or invalid parameter"
 		c.Abort("404")
 	}
 	c.ServeJSON()

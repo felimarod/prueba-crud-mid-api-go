@@ -10,6 +10,7 @@ import (
 	"github.com/udistrital/utils_oas/time_bogota"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 // NumeroTelefonicoController operations for NumeroTelefonico
@@ -40,12 +41,16 @@ func (c *NumeroTelefonicoController) Post() {
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if _, err := models.AddNumeroTelefonico(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = v
+			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "201", "Message": "Registration successful", "Data": v}
 		} else {
-			c.Data["json"] = err.Error()
+			logs.Error(err)
+			c.Data["message"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
@@ -62,9 +67,12 @@ func (c *NumeroTelefonicoController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetNumeroTelefonicoById(id)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		//c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service GETONE: The request contains an incorrect parameter or no record exists"
+		c.Abort("404")
 	} else {
-		c.Data["json"] = v
+		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Request successful", "Data": v}
 	}
 	c.ServeJSON()
 }
@@ -125,9 +133,11 @@ func (c *NumeroTelefonicoController) GetAll() {
 
 	l, err := models.GetAllNumeroTelefonico(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service GETALL: The request contains an incorrect parameter or no record exists"
+		c.Abort("404")
 	} else {
-		c.Data["json"] = l
+		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Request successful", "Data": l}
 	}
 	c.ServeJSON()
 }
@@ -148,12 +158,16 @@ func (c *NumeroTelefonicoController) Put() {
 		v.FechaCreacion = time_bogota.TiempoCorreccionFormato(v.FechaCreacion)
 		v.FechaModificacion = time_bogota.TiempoBogotaFormato()
 		if err := models.UpdateNumeroTelefonicoById(&v); err == nil {
-			c.Data["json"] = "OK"
+			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Update successful", "Data": v}
 		} else {
-			c.Data["json"] = err.Error()
+			logs.Error(err)
+			c.Data["message"] = "Error service PUT: The request contains an incorrect parameter or invalid parameter"
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service PUT: The request contains an incorrect parameter or invalid parameter"
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
@@ -169,9 +183,12 @@ func (c *NumeroTelefonicoController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteNumeroTelefonico(id); err == nil {
-		c.Data["json"] = "OK"
+		d := map[string]interface{}{"id": id}
+		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Delete successful", "Data": d}
 	} else {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service Delete: The request contains an incorrect parameter or invalid parameter"
+		c.Abort("404")
 	}
 	c.ServeJSON()
 }
