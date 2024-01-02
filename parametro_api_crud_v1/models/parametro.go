@@ -19,7 +19,7 @@ type Parametro struct {
 	FechaCreacion     string         `orm:"column(fecha_creacion);type(timestamp without time zone)"`
 	FechaModificacion string         `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 	TipoParametroId   *TipoParametro `orm:"column(tipo_parametro_id);rel(fk)"`
-	ParametroPadreId  *Parametro     `orm:"column(parametro_padre_id);rel(fk)"`
+	ParametroPadreId  int            `orm:"column(parametro_padre_id);fk"`
 }
 
 func (t *Parametro) TableName() string {
